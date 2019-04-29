@@ -2,7 +2,7 @@
 var express = require('express');
 var bodyParser = require('body-parser');
 var cors = require('cors');
-var DBControler = require('./controladores/DBControler.js')
+var competenciasController = require('./controladores/competenciasController.js')
 
 var app = express();
 
@@ -15,8 +15,9 @@ app.use(bodyParser.urlencoded({
 app.use(bodyParser.json());
 
 //get peliculas
-app.get('/competencias', DBControler.listarCompetencias);
+app.get('/competencias', competenciasController.listarCompetencias);
 
+app.get('/competencias/:id/peliculas', competenciasController.obtenerOpciones);
 //SI YO QUIERO PASARLE POR PARAMETRO ALGO A LA RUTA LE TENGO QUE PONER: PORR EJEMPLO /COMPETENCIAS/:PARAMETRONOMBRE
 
 //seteamos el puerto en el cual va a escuchar los pedidos la aplicación
