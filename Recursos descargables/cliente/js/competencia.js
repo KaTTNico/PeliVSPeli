@@ -163,6 +163,7 @@ function CompetenciasController() {
     },
     // Este método obtiene y carga en el DOM los resultados de una competencia (películas más votadas)
     this.obtenerResultados = function(id) {
+
       // Como luego se necesita usar "this" dentro de la función de callback, se guarda en self la referencia a CompetenciasController
       var self = this;
       // Se obtienen del backend los resultados de las competencias
@@ -173,6 +174,8 @@ function CompetenciasController() {
         });
     },
     this.cargarResultados = function(id, data) {
+      console.log('asdsadasdassdsasd')
+      console.log(data)
       // Se carga el nombre de la competencia en el contenedor del título
       $("#nombreCompetencia").text(data.competencia);
       // Se recorren los resultados (data es un array)
