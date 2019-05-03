@@ -33,9 +33,17 @@ function obtenerCompetencia(id) {
 //obtener opciones
 function obtenerOpciones(req, res) {
   //obtener opciones
-  var qy = 'SELECT * FROM competencias_pelicula WHERE id=' + req.params.id + '; SELECT * FROM pelicula ORDER BY RAND() LIMIT 2;'
+  var qy = 'SELECT * FROM competencias_pelicula WHERE id=' + req.params.id + ';'
+  qy += ' SELECT * FROM pelicula'
+  qy += ' JOIN director_pelicula ON director_pelicula.pelicula_id=pelicula.id'
+  qy += ' JOIN actor_pelicula ON actor_pelicula.pelicula_id=pelicula.id'
+  qy += ' JOIN competencias_pelicula ON competencias_pelicula.id=' + req.params.id
+  qy += ' WHERE (competencias_pelicula.idGenero IS NULL OR competencias_pelicula.idGenero=pelicula.genero_id)'
+  qy += ' AND (competencias_pelicula.idDirector IS NULL OR competencias_pelicula.idDirector=director_pelicula.director_id)'
+  qy += ' AND (competencias_pelicula.idActor IS NULL OR competencias_pelicula.idActor=actor_pelicula.actor_id) ORDER BY RAND() LIMIT 2;'
   //mandar la consulta a la base de datos
   connection.query(qy, function(error, result, fields) {
+    console.log(result)
     //control errores
     if (error) return res.status(500).json(error)
     if (result[0].length == 0) return res.status(404).json('No se encontro ninguna competencia con ese id.')

@@ -112,7 +112,7 @@ CREATE TABLE `competencias_pelicula` (
 ) ;
 
 LOCK TABLES `competencias_pelicula` WRITE;
-INSERT INTO `competencias_pelicula` VALUES (1,'Cual pelicula te hizo reir mas?',5,NULL,NULL),(2,'Cual es la mejor pelicula?',NULL,NULL,NULL),(3,'Cual es la pelicula mas bizarra?',5,NULL,NULL),(4,'Cual es la pelicula mas interesante?',NULL,NULL,NULL);
+INSERT INTO `competencias_pelicula` VALUES (1,'Cual es la mejor pelicula con Jim Carrey?',NULL,NULL,946),(2,'Cual es la mejor pelicula?',NULL,NULL,NULL),(3,'Cual es la pelicula mas bizarra?',5,NULL,NULL),(4,'Cual es la pelicula mas interesante?',NULL,NULL,NULL);
 UNLOCK TABLES;
 
 DROP TABLE IF EXISTS `votos_competencia`;
