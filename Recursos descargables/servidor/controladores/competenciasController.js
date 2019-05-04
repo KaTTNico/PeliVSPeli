@@ -18,18 +18,25 @@ function listarCompetencias(req, res) {
 
 //crear competencia
 function crearCompetencia(req, res) {
-  var qy = 'INSERT INTO competencias(nombre,idGenero,idDirector,idActor) VALUES('
-  qy += '\'' + req.body.nombre + '\' ,'
-  qy += ((req.body.genero == 0) ? 'NULL' : req.body.genero) + ','
-  qy += ((req.body.director == 0) ? 'NULL' : req.body.director) + ','
-  qy += ((req.body.actor == 0) ? 'NULL' : req.body.actor) + ');'
-
-  connection.query(qy, function(error, result, fields) {
-    //control errores
+  var qy = 'SELECT * FROM competencias WHERE nombre=?'
+  connection.query(qy, [req.body.nombre], function(error, result, fields) {
+    //control error
     if (error) return res.status(500).json(error)
-    if (result.affectedRows == 0) return res.status(505).send('Hubo un error en la base de datos.')
+    //control negocio
+    if (result.length != 0) return res.status(422).send('Ya existe una competencia con ese nombre.')
 
-    res.send('exito')
+    qy = 'INSERT INTO competencias(nombre,idGenero,idDirector,idActor) VALUES('
+    qy += '\'' + req.body.nombre + '\' ,'
+    qy += ((req.body.genero == 0) ? 'NULL' : req.body.genero) + ','
+    qy += ((req.body.director == 0) ? 'NULL' : req.body.director) + ','
+    qy += ((req.body.actor == 0) ? 'NULL' : req.body.actor) + ');'
+
+    connection.query(qy, function(error, result, fields) {
+      //control errores
+      if (error) return res.status(500).json(error)
+
+      res.send('exito')
+    })
   })
 }
 
@@ -213,7 +220,8 @@ function votar(req, res) {
     qy = 'INSERT INTO votos_competencia (idCompetencia, idPelicula, votos) VALUES(?, ?, ?) ON DUPLICATE KEY UPDATE votos=(votos + 1);'
 
     connection.query(qy, [req.params.id, req.body.idPelicula, 1], function(error, result, fields) {
-      if (result.affectedRows == 0) return res.status(505).send('Hubo un error en base de datos')
+      //control error
+      if (error) return res.status(500).json(error)
 
       res.send('exito')
     })
