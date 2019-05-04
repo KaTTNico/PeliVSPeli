@@ -56,13 +56,13 @@ function CompetenciasController() {
       // Como luego se necesita usar "this" dentro de la función de callback, se guarda en self la referencia a CompetenciasController
       var self = this;
       // Se obtiene de la api el detalle de una competencia
-      console.log('obtenercompetencia.')
       var opciones = $.getJSON(server + "/competencias/" + id, function(data) {
         // Se carga la información obtenida en el DOM
         self.cargarCompetencia(id, data);
       });
     },
     this.cargarCompetencia = function(id, data) {
+      console.log(data)
       // data es el detalle de una competencia que retornó la api (un objeto json)
       // Se coloca en el elemento correspondiente el nombre de la competencia
       $(".nombre").text(data.nombre);
@@ -174,8 +174,6 @@ function CompetenciasController() {
         });
     },
     this.cargarResultados = function(id, data) {
-      console.log('asdsadasdassdsasd')
-      console.log(data)
       // Se carga el nombre de la competencia en el contenedor del título
       $("#nombreCompetencia").text(data.competencia);
       // Se recorren los resultados (data es un array)

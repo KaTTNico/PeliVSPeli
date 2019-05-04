@@ -18,10 +18,31 @@ app.use(bodyParser.json());
 app.get('/competencias', competenciasController.listarCompetencias)
 
 //post competencia
-app.post('/competencias', competenciasController.foo)
+app.post('/competencias', competenciasController.crearCompetencia)
+
+//reiniciar competencia
+app.delete('/competencias/:id/votos', competenciasController.reiniciarCompetencia)
+
+//delete competencia
+app.delete('/competencias/:id', competenciasController.eliminarCompetencia)
+
+//update competencia
+app.put('/competencias/:id', competenciasController.editarCompetencia)
+
+//get competencia
+app.get('/competencias/:id', competenciasController.obtenerCompetencia)
 
 //get competencia
 app.get('/competencias/:id/peliculas', competenciasController.obtenerOpciones)
+
+//get generos
+app.get('/generos', competenciasController.obtenerGeneros)
+
+//get drectores
+app.get('/directores', competenciasController.obtenerDirectores)
+
+//get actores
+app.get('/actores', competenciasController.obtenerActores)
 
 //set voto
 app.post('/competencias/:id/voto', competenciasController.votar)
